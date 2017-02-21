@@ -10,11 +10,26 @@
         return _.template($('#' + id).html());
     };
 
+    var vent = _.extend({}, Backbone.Events);
+
+    App.Views.SpecialTask = Backbone.View.extend({
+       initialize: function () {
+           vent.on('specialTasks:show', this.show, this);
+       },
+
+       show: function (id) {
+            var specialTask = this.collection.get('id');
+            var specialTaskView = new App.Views.SpecialTask({
+                model: specialTask
+            });
+            $('body').append(specialTaskView.render().el);
+       }
+    });
+
     App.Router = Backbone.Router.extend({
        routes: {
-           ''              : 'index',
-           'page/:id/*'    : 'page',
-           'search/:query' : 'search',
+           ''                   : 'index',
+           'specialTask/:id'    : 'showSpecialTask',
            '*other'             : 'default'
        },
 
@@ -22,18 +37,16 @@
            console.log('index');
        },
 
-       page: function (id) {
-           console.log('Page on ' + id + '!!!');
-       },
-
-       search: function (query) {
-           console.log('Query: '+ query)
+       showSpecialTask: function (id) {
+            vent.trigger('specialTasks:show', id);
        },
 
        default: function () {
            console.log('Page not fount')
        }
     });
+
+    new App.Views.SpecialTask({ collection:someCollection });
 
     new App.Router();
     Backbone.history.start();
