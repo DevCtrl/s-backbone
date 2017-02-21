@@ -11,29 +11,41 @@
 
     App.Models.Task = Backbone.Model.extend({
         default: {
-            name : 'Undefined',
+            title : 'Undefined',
             priority : 0
-        },
-        events:{
-            //only click on span
-            'click span': 'showAlert'
-        },
-        showAlert: function () {
-            alert('Your task')
         }
     });
+
     App.Views.TaskView = Backbone.View.extend({
         tagName: 'li',
+        template: template('taskTemplate'),
+
+        initialize: function () {
+            _.bindAll(this, 'editTask', 'render');
+            this.model.on('change', this.render, this);
+        },
 
         render: function () {
-            this.$el.html( this.model.get('title') );
+            var template = this.template(this.model.toJSON());
+            this.$el.html( template );
             return this;
+        },
+
+        events: {
+            'click .edit_btn': 'editTask'
+        },
+
+        editTask: function () {
+            var newTaskTitle = prompt('How you named this task', this.model.get('title'));
+            this.model.set('title', newTaskTitle);
         }
     });
-    App.Collection.Task = Backbone.Collection.extend({
+
+    App.Collection.Tasks = Backbone.Collection.extend({
        model : App.Models.Task
     });
-    App.Views.Tasks = Backbone.View.extend({
+
+    App.Views.TasksView = Backbone.View.extend({
         tagName: 'ul',
         render: function () {
             this.collection.each(this.addOne, this);
@@ -47,22 +59,22 @@
         }
     });
 
-    var tasks = new App.Collection.Task([
+    var tasks = new App.Collection.Tasks([
         {
-            task: 'Java',
+            title: 'Java',
             priority: 5
         },
         {
-            task: 'JS',
+            title: 'JS',
             priority: 5
         }
     ]);
 
-    var taskView = new App.Views.TaskView({
+    var taskView = new App.Views.TasksView({
        collection : tasks
     });
 
-    $('tasks').html(taskView.el);
+    $('.tasks').html(taskView.render().el);
 
 
 

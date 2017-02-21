@@ -1,4 +1,4 @@
-App.Views.Tasks = Backbone.View.extend({
+App.Views.TasksView = Backbone.View.extend({
     tagName: 'ul',
     render: function () {
         this.collection.each(this.addOne, this);
