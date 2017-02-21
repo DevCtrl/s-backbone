@@ -1,10 +1,8 @@
 // view of one person
-var viewHelper;
-
-var PersonView = Backbone.View.extend({
+App.Views.PersonView = Backbone.View.extend({
     tagName: 'li',
 
-    template: viewHelper.template('personTemplate'),
+    template: window.template('personTemplate'),
 
     initialize: function () {
         this.render();

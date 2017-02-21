@@ -1,4 +1,3 @@
-
-var PeopleCollection = Backone.Collection.extend({
-    model : Person
+App.Collection.PeopleCollection = Backbone.Collection.extend({
+    model : App.Models.Person
 });
