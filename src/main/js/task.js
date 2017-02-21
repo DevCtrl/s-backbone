@@ -2,7 +2,7 @@
     window.App = {
         Models: {},
         Views: {},
-        Collection: {}
+        Collection: {},
     };
 
     window.template = function (id) {
@@ -59,7 +59,7 @@
     });
 
     App.Collection.Tasks = Backbone.Collection.extend({
-       model : App.Models.Task
+        model : App.Models.Task
     });
 
     App.Views.TasksView = Backbone.View.extend({
@@ -83,7 +83,7 @@
     });
 
     App.Views.AddTask = Backbone.View.extend({
-        el: 'addTask',
+        el: '#addTask',
 
         events: {
             'submit' : 'submit'
@@ -120,7 +120,7 @@
     ]);
 
     var taskView = new App.Views.TasksView({
-       collection : tasks
+        collection : tasks
     });
 
     $('.tasks').html(taskView.render().el);
@@ -128,5 +128,6 @@
     var addTaskView = new App.Views.AddTask({
         collection: tasks
     });
+
 
 }());
