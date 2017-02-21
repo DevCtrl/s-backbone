@@ -13,6 +13,13 @@
         default: {
             name : 'Undefined',
             priority : 0
+        },
+        events:{
+            //only click on span
+            'click span': 'showAlert'
+        },
+        showAlert: function () {
+            alert('Your task')
         }
     });
     App.Views.TaskView = Backbone.View.extend({
@@ -55,31 +62,8 @@
        collection : tasks
     });
 
-    taskView.render();
-    $('body').html(taskView.el);
-
-    console.log(taskView.render().el);
+    $('tasks').html(taskView.el);
 
 
 
 }());
-
-// var peopleCollection = new App.Collection.PeopleCollection([
-//     {
-//         name : 'Rob',
-//         age : 20,
-//         job : 'Java Developer'
-//     },{
-//         name : 'Ivan',
-//         age : 23,
-//         job : 'C# Developer'
-//     },{
-//         name : 'Anton',
-//         age : 28,
-//         job : 'PM'
-//     }
-// ]);
-//
-// var peopleView = new App.Views.PeopleView({collection : peopleCollection});
-//
-// $(document.body).append(peopleView.render().el);
