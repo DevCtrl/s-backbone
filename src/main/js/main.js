@@ -13,6 +13,12 @@
         default: {
             title : 'Undefined',
             priority : 0
+        },
+
+        validate: function (attrs) {
+            if (! $.trim(attrs.title) ) {
+                return 'Title of tasks need be valid';
+            }
         }
     });
 
@@ -37,6 +43,7 @@
 
         editTask: function () {
             var newTaskTitle = prompt('How you named this task', this.model.get('title'));
+            // if ( !newTaskTitle ) return;
             this.model.set('title', newTaskTitle);
         }
     });
