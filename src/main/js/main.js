@@ -29,6 +29,7 @@
         initialize: function () {
             _.bindAll(this, 'editTask', 'render');
             this.model.on('change', this.render, this);
+            this.model.on('destroy', this.remove, this);
         },
 
         render: function () {
@@ -38,13 +39,22 @@
         },
 
         events: {
-            'click .edit_btn': 'editTask'
+            'click .edit_btn': 'editTask',
+            'click .delete_btn': 'destroy'
         },
 
         editTask: function () {
             var newTaskTitle = prompt('How you named this task', this.model.get('title'));
             // if ( !newTaskTitle ) return;
             this.model.set('title', newTaskTitle);
+        },
+
+        destroy: function () {
+            this.model.destroy();
+        },
+
+        remove: function () {
+            this.$el.remove();
         }
     });
 
